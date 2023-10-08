@@ -2,7 +2,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import openpyxl
-<<<<<<< HEAD
 import tkinter as tk
 from tkinter import filedialog
 import time

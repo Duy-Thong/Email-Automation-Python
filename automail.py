@@ -34,7 +34,7 @@ def send_email():
 
     # Kết nối đến máy chủ SMTP của Gmail
     smtp_server = "smtp.gmail.com"
-    smtp_port = 4
+    smtp_port = 587
     server = smtplib.SMTP(smtp_server, smtp_port)
     server.starttls()
 

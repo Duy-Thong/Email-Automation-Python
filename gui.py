@@ -205,14 +205,13 @@ screen1.pack(fill="both", expand=True)
 
 script_directory = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 
-image_path = os.path.join(script_directory, "cover2.jpg")
-original_image = Image.open(image_path)
-resized_image = original_image.resize((800,160))
-tk_image = ImageTk.PhotoImage(resized_image)
+# image_path = r"Email-Automation-Python/assets/cover2.jpg"
+# original_image = Image.open(image_path)
+# resized_image = original_image.resize((800,160))
+# tk_image = ImageTk.PhotoImage(resized_image)
 
 # Set the background image
-canvas = ctk.CTkCanvas(master=screen1, width=800, height=160)
-canvas.create_image(0, 0, anchor=tk.NW, image=tk_image)
+canvas = ctk.CTkCanvas(master=screen1, width=800, height=160,bg="cyan")
 canvas.pack()
 
 text = ctk.CTkLabel(master=screen1, text="Welcome to Email Automation by SoMedia", font=("Arial", 15), text_color="white",text_color_disabled="white")
@@ -246,13 +245,9 @@ user_manual_button.pack()
 # Screen 2:
 screen2 = ctk.CTkFrame(master=app, width=800, height=600, bg_color="blue")
 
-original_image1 = Image.open(image_path)
-resized_image1 = original_image1.resize((800,160))
-tk_image1 = ImageTk.PhotoImage(resized_image1)
 
 # Set the background image
-canvas = ctk.CTkCanvas(master=screen2, width=800, height=160)
-canvas.create_image(0, 0, anchor=tk.NW, image=tk_image1)
+canvas = ctk.CTkCanvas(master=screen2, width=800, height=160,bg="cyan")
 canvas.pack()
 
 
@@ -283,13 +278,9 @@ Next_button.pack()
 
 screen3=ctk.CTkFrame(master=app, width=400, height=300, bg_color="blue")
 
-original_image2 = Image.open(image_path)
-resized_image2 = original_image1.resize((800,160))
-tk_image2 = ImageTk.PhotoImage(resized_image2)
 
 # Set the background image
-canvas = ctk.CTkCanvas(master=screen3, width=800, height=160)
-canvas.create_image(0, 0, anchor=tk.NW, image=tk_image2)
+canvas = ctk.CTkCanvas(master=screen3, width=800, height=160,bg="cyan")
 canvas.pack()
 
 back_tosc2=ctk.CTkButton(master=screen3, text="Back", width=70, height=30, command=lambda: back_to_screen2())

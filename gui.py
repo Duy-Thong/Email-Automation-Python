@@ -195,7 +195,7 @@ def send_email_txt():
               
 
 app = ctk.CTk()
-app.title("Email Automation by SoMedia")
+app.title("Email Automation by DuyThong")
 app.geometry("600x400")
 app.resizable(False, False)
 
@@ -214,8 +214,8 @@ script_directory = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__fi
 canvas = ctk.CTkCanvas(master=screen1, width=800, height=160,bg="cyan")
 canvas.pack()
 
-text = ctk.CTkLabel(master=screen1, text="Welcome to Email Automation by SoMedia", font=("Arial", 15), text_color="white",text_color_disabled="white")
-text.place(x=160,y=100)
+text = ctk.CTkLabel(master=screen1, text="Welcome to Email Automation by DuyThong", font=("Arial", 15), text_color="white",text_color_disabled="white")
+text.place(x=150,y=100)
 # Create fields to input email and password
 email_label = ctk.CTkLabel(master=screen1, text="Email")
 email_label.place(x=300, y=100)

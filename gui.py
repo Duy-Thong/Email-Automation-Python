@@ -44,7 +44,6 @@ def login():
         screen2.pack()
     except:
         # Delete email and password
-        email_entry.delete(0, ctk.END)
         password_entry.delete(0, ctk.END)
         tk.messagebox.showerror("Error", "Login failed. Please check your email and password.")
 
@@ -91,12 +90,14 @@ def send_email_html():
     sheet = wb.active
     # Lấy danh sách thông tin người nhận từ cột A (Full name) và cột B (Email)
     recipients = []
+    cnt=1
     for row in sheet.iter_rows(min_row=2, values_only=True):
-
+        cnt+=1
         full_name, email, *_ = row  # Chỉ quan tâm đến cột A và cột B
         if email:
             recipients.append((full_name, email))
-    
+            sheet.cell(row=cnt, column=3).value = True
+    wb.save(data_path)
     # Kết nối đến máy chủ SMTP của Gmail
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
@@ -147,11 +148,14 @@ def send_email_txt():
     sheet = wb.active
     # Lấy danh sách thông tin người nhận từ cột A (Full name) và cột B (Email)
     recipients = []
+    cnt=1
     for row in sheet.iter_rows(min_row=2, values_only=True):
         full_name, email, *_ = row  # Chỉ quan tâm đến cột A và cột B
+        cnt+=1
         if email:
             recipients.append((full_name, email))
-
+            sheet.cell(row=cnt, column=3).value = True
+    wb.save(data_path)
     # Kết nối đến máy chủ SMTP của Gmail
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
@@ -273,7 +277,7 @@ select_index_button.pack()
 
 Next_button = ctk.CTkButton(master=screen2, text="Next", width=100, height=30, command=lambda: submitfile())
 Next_button.pack()
-
+#____________________________________________________________________#
 #Screen 3:
 
 screen3=ctk.CTkFrame(master=app, width=400, height=300, bg_color="blue")
@@ -295,5 +299,5 @@ input_subject_entry.pack()
 send_button = ctk.CTkButton(screen3, text="Send",width=100, height=30, command=lambda: send_email())
 send_button.place(x=300, y=260)
 send_button.pack()
-
+#_______________________________________________________#
 app.mainloop()

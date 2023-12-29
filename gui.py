@@ -199,7 +199,7 @@ def send_email_txt():
               
 
 app = ctk.CTk()
-app.title("Email Automation by DuyThong")
+app.title("SoMedia Email Automation")
 app.geometry("600x400")
 app.resizable(False, False)
 
@@ -209,17 +209,19 @@ screen1.pack(fill="both", expand=True)
 
 script_directory = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 
-# image_path = r"Email-Automation-Python/assets/cover2.jpg"
-# original_image = Image.open(image_path)
-# resized_image = original_image.resize((800,160))
-# tk_image = ImageTk.PhotoImage(resized_image)
+image_path = r"assets/cover2.jpg"
+original_image = Image.open(image_path)
+resized_image = original_image.resize((800,180))
+tk_image = ImageTk.PhotoImage(resized_image)
 
 # Set the background image
-canvas = ctk.CTkCanvas(master=screen1, width=800, height=160,bg="cyan")
+canvas = ctk.CTkCanvas(master=screen1, width=800, height=200)
+canvas.create_image(0, 0, anchor=tk.NW, image=tk_image)
+
 canvas.pack()
 
-text = ctk.CTkLabel(master=screen1, text="Welcome to Email Automation by DuyThong", font=("Arial", 15), text_color="white",text_color_disabled="white")
-text.place(x=150,y=100)
+text = ctk.CTkLabel(master=screen1, text="Welcome to Email Automation by DuyThong-SoMedia", font=("Arial", 15), text_color="white",text_color_disabled="white")
+text.place(x=120,y=130)
 # Create fields to input email and password
 email_label = ctk.CTkLabel(master=screen1, text="Email")
 email_label.place(x=300, y=100)
@@ -251,7 +253,8 @@ screen2 = ctk.CTkFrame(master=app, width=800, height=600, bg_color="blue")
 
 
 # Set the background image
-canvas = ctk.CTkCanvas(master=screen2, width=800, height=160,bg="cyan")
+canvas = ctk.CTkCanvas(master=screen2, width=800, height=180,bg="cyan")
+canvas.create_image(0, 0, anchor=tk.NW, image=tk_image)
 canvas.pack()
 
 
@@ -284,7 +287,8 @@ screen3=ctk.CTkFrame(master=app, width=400, height=300, bg_color="blue")
 
 
 # Set the background image
-canvas = ctk.CTkCanvas(master=screen3, width=800, height=160,bg="cyan")
+canvas = ctk.CTkCanvas(master=screen3, width=800, height=180,bg="cyan")
+canvas.create_image(0, 0, anchor=tk.NW, image=tk_image)
 canvas.pack()
 
 back_tosc2=ctk.CTkButton(master=screen3, text="Back", width=70, height=30, command=lambda: back_to_screen2())

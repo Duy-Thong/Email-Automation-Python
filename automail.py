@@ -4,6 +4,12 @@ from email.mime.text import MIMEText
 import openpyxl
 import time
 
+data_path = "data.xlsx"
+template_path = "template.html"
+sender_email = ""
+sender_password = ""
+subject = ""
+
 
 def send_email(data_path, template_path, sender_email, sender_password, subject):
     # Determine the content type based on the file extension

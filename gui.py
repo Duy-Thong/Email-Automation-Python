@@ -11,6 +11,7 @@ import openpyxl
 import os
 import sys
 import time
+import concurrent.futures
 
 # Global variables
 sender_email = ""
@@ -85,6 +86,35 @@ def user_manual():
     )
 
 
+def send_email_task(recipient, content_type, subject, email_content):
+    full_name, receiver_email = recipient
+    try:
+        # Connect to Gmail's SMTP server
+        smtp_server = "smtp.gmail.com"
+        smtp_port = 587
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(sender_email, sender_password)
+
+        # Create a MIMEMultipart object to create the email
+        message = MIMEMultipart()
+        message["From"] = sender_email
+        message["To"] = receiver_email
+        message["Subject"] = subject
+        email_content_with_name = email_content.replace("$NAME", full_name)
+        message.attach(MIMEText(email_content_with_name, content_type))
+
+        # Send the email
+        server.sendmail(sender_email, receiver_email, message.as_string())
+
+        # Close the SMTP connection
+        server.quit()
+
+        return (full_name, receiver_email, True)
+    except Exception as e:
+        return (full_name, receiver_email, False)
+
+
 def send():
     # Determine the content type based on the file extension
     if template_path.endswith(".html"):
@@ -106,54 +136,31 @@ def send():
         if email:
             recipients.append((full_name, email))
 
-    # Connect to Gmail's SMTP server
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
-    server = smtplib.SMTP(smtp_server, smtp_port)
-    server.starttls()
-    try:
-        # Log in to the email account
-        server.login(sender_email, sender_password)
-        # Send email to each recipient
-        sent_successfully = []  # List of successfully sent emails
-        failed_recipients = []  # List of failed emails
+    # Use ThreadPoolExecutor to send emails concurrently
+    sent_successfully = []  # List of successfully sent emails
+    failed_recipients = []  # List of failed emails
 
-        for full_name, receiver_email in recipients:
-            try:
-                # Create a MIMEMultipart object to create the email
-                message = MIMEMultipart()
-                message["From"] = sender_email
-                message["To"] = receiver_email
-                message["Subject"] = subject
-                email_content_with_name = email_content.replace("$NAME", full_name)
-                # Attach the email content based on the determined content type
-                message.attach(MIMEText(email_content_with_name, content_type))
-
-                # Send the email
-                server.sendmail(sender_email, receiver_email, message.as_string())
-
-                # Record the successfully sent email
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [
+            executor.submit(
+                send_email_task, recipient, content_type, subject, email_content
+            )
+            for recipient in recipients
+        ]
+        for future in concurrent.futures.as_completed(futures):
+            full_name, receiver_email, success = future.result()
+            if success:
                 sent_successfully.append((full_name, receiver_email))
-                print(f"{full_name}, {receiver_email}")
-            except Exception as e:
-                # Record the failed email
+            else:
                 failed_recipients.append((full_name, receiver_email))
-                print(f"Failed to send email to {full_name} ({receiver_email}): {e}")
-            time.sleep(1)
-        with open(success_path, "w", encoding="utf-8") as f:
-            for name, email in sent_successfully:
-                f.write(f"{name}, {email}\n")
 
-        with open(fail_path, "w", encoding="utf-8") as f:
-            for name, email in failed_recipients:
-                f.write(f"{name}, {email}\n")
-        # Close the SMTP connection
-        server.quit()
+    with open(success_path, "w", encoding="utf-8") as f:
+        for name, email in sent_successfully:
+            f.write(f"{name}, {email}\n")
 
-    except Exception as e:
-        print(f"Failed to send emails due to: {e}")
-        # Close the SMTP connection in case of failure
-        server.quit()
+    with open(fail_path, "w", encoding="utf-8") as f:
+        for name, email in failed_recipients:
+            f.write(f"{name}, {email}\n")
 
 
 app = ctk.CTk()

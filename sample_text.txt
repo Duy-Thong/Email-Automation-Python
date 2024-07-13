@@ -1,0 +1,6 @@
+Xin chào $NAME
+Chúc mừng bạn đã vượt qua bài kiểm tra đầu vào của chúng tôi.
+Hẹn gặp bạn trong buổi phỏng vấn sắp tới.
+
+Trân trọng,
+Ban tuyển dụng

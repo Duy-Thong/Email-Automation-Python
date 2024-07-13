@@ -1,50 +1,45 @@
+# Email Automation Tool
 
-# Email Automation Python Script
+This Python application utilizes tkinter for the graphical interface and SMTP for email sending. It allows users to send personalized emails to a specified list of recipients from an Excel sheet.
 
-This Python script automates the process of sending emails to a list of recipients using data from an Excel file and an HTML email template.
+## Overview
 
-## Requirements
+Instead of manually looping through and sending emails to a group of people, which can be inconvenient or impersonal, this tool sends batch emails individually, personalized with recipient names. Currently, it supports replacing names using the $NAME variable in the email content. Future updates may include additional variables for positions or addresses.
 
-- Python 3.x
-- `smtplib` library
-- `email` library
-- `openpyxl` library
+## Usage Guide
 
-## Setup
+### Login to Email Account
 
-1. Clone or download this repository to your local machine.
+#### Login Screen
+Enter your email and password. Note: Use an App Password if 2-step verification is enabled for your Google account.
 
-2. Install the required Python libraries using pip:
+##### How to create an App Password:
+- Follow Google's instructions: [Google Help Center](https://support.google.com/accounts/answer/185833)
+- Ensure 2-step verification is enabled: Go to https://myaccount.google.com/security, select "Security" tab, turn on 2-step verification, and navigate to "App Passwords". Generate a new App Password and use it for login.
 
-   ```shell
-   pip install openpyxl
-   ```
+### Input Recipient List and Email Content
 
-3. Update the script with your email and server details:
-   
-   - Set the `data_path` variable to the path of your Excel file containing recipient data.
-   - Set the `index_path` variable to the path of your HTML email template.
-   - Replace the `sender_email` and `sender_password` variables with your email credentials.
-   
-4. Customize the email content in the HTML template (`index.html`). You can use the `$NAME` placeholder to personalize the email content with the recipient's name.
+#### File Selection Screen
+- **Excel File:** Should contain recipient details in the format: Column A: Full Name, Column B: Email. First row as header or leave empty.
+- **Content File:** Either HTML or plain text format. Use $NAME where the recipient's name should be inserted.
+  
+##### Example:
+- **HTML:** `<p>Hello, $NAME</p>`
+- **TXT:** `Hello, $NAME`
 
-## Usage
+### Enter Email Subject
 
-1. Run the script using the following command:
+#### Subject Input Screen
+Enter the email subject and click "Send" to initiate email sending process. The app will automatically send emails to the recipients listed in the Excel sheet.
 
-   ```shell
-   python send_email.py
-   ```
+#### Note:
+- After sending, a success message will display.
+- Successful email deliveries will be marked True in the Excel sheet.
 
-2. The script will read the recipient data from the Excel file, personalize the email content, and send emails to the recipients with a throttling rate of 20 emails every 3 minutes to avoid being flagged as spam.
 
-3. After the script completes, you will see a success message indicating that the emails have been sent.
-4. Remember to replace your specifics like email address, password, html file address and xlsx file address with your specifics.
+## Credits
 
-## Author
+Developed by Đào Duy Thông - D21 PTIT
 
-DAO DUY THONG
-
-If you have any questions or issues, feel free to contact me at duythong.ptit@gmail.com.
-
+GitHub Repository: [Email Automation Python](https://github.com/Duy-Thong/Email-Automation-Python)
 

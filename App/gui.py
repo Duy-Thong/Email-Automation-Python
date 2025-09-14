@@ -30,7 +30,7 @@ def login():
     sender_password = password_entry.get()
 
     if sender_email == "" or sender_password == "":
-        messagebox.showerror("Error", "Please enter your email and password.")
+        messagebox.showerror("Lỗi", "Vui lòng nhập email và mật khẩu của bạn.")
         return
     # Try to login with email and password
     smtp_server = "smtp.gmail.com"
@@ -45,7 +45,7 @@ def login():
         # Delete email and password
         password_entry.delete(0, ctk.END)
         messagebox.showerror(
-            "Error", f"Login failed. Please check your email and password. {e}"
+            "Lỗi", f"Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu. {e}"
         )
 
 
@@ -54,7 +54,9 @@ def submitfile():
     data_path = data_path_entry.get()
     template_path = index_path_entry.get()
     if data_path == "" or template_path == "":
-        messagebox.showerror("Empty Fields!", "Please enter data path and index path.")
+        messagebox.showerror(
+            "Trường trống!", "Vui lòng nhập đường dẫn dữ liệu và đường dẫn mẫu."
+        )
         return
     screen2.pack_forget()
     screen3.pack(fill="both", expand=True)
@@ -64,10 +66,10 @@ def send_email():
     global subject
     subject = input_subject_entry.get()
     if subject == "":
-        messagebox.showerror("Empty Field!", "Please enter the subject.")
+        messagebox.showerror("Trường trống!", "Vui lòng nhập tiêu đề email.")
         return
     send()
-    messagebox.showinfo("Success", "Emails have been sent successfully!")
+    messagebox.showinfo("Thành công", "Emails đã được gửi thành công!")
 
 
 def back_to_screen1():
@@ -166,7 +168,7 @@ def send():
 
 
 app = ctk.CTk()
-app.title("SoMedia Email Automation")
+app.title("Công cụ Tự động hóa Email")
 app.geometry("600x500")
 app.resizable(False, False)
 
@@ -186,7 +188,7 @@ screen1.pack(fill="both", expand=True)
 
 text = ctk.CTkLabel(
     master=screen1,
-    text="Welcome to Email Automation",
+    text="Công cụ gửi email tự động CLB Sổ Media",
     font=("Arial", 20, "bold"),
     text_color="#402E7A",
 )
@@ -198,7 +200,7 @@ email_label.pack()
 email_entry = ctk.CTkEntry(master=screen1, width=300, height=30, font=("Arial", 12))
 email_entry.pack(pady=5)
 
-password_label = ctk.CTkLabel(master=screen1, text="Password", font=("Arial", 14))
+password_label = ctk.CTkLabel(master=screen1, text="Mật khẩu", font=("Arial", 14))
 password_label.pack()
 
 password_entry = ctk.CTkEntry(
@@ -208,7 +210,7 @@ password_entry.pack(pady=5)
 
 login_button = ctk.CTkButton(
     master=screen1,
-    text="Login",
+    text="Đăng nhập",
     width=100,
     height=40,
     command=login,
@@ -219,7 +221,7 @@ login_button.pack(pady=20)
 
 user_manual_button = ctk.CTkButton(
     master=screen1,
-    text="User Manual",
+    text="Hướng dẫn sử dụng",
     width=100,
     height=40,
     command=user_manual,
@@ -233,7 +235,7 @@ screen2 = ctk.CTkFrame(master=app)
 
 back_button = ctk.CTkButton(
     master=screen2,
-    text="Back",
+    text="Trở lại",
     width=70,
     height=30,
     command=back_to_screen1,
@@ -242,7 +244,9 @@ back_button = ctk.CTkButton(
 )
 back_button.pack(side=tk.TOP, padx=20, pady=20)
 
-data_path_label = ctk.CTkLabel(screen2, text="Path to xlsx file", font=("Arial", 14))
+data_path_label = ctk.CTkLabel(
+    screen2, text="Đường dẫn tới file xlsx", font=("Arial", 14)
+)
 data_path_label.pack()
 
 data_path_entry = ctk.CTkEntry(screen2, width=300, height=30, font=("Arial", 12))
@@ -250,7 +254,7 @@ data_path_entry.pack(pady=10)
 
 select_data_button = ctk.CTkButton(
     screen2,
-    text="Choose file",
+    text="Chọn file",
     command=lambda: data_path_entry.insert(0, filedialog.askopenfilename()),
     width=100,
     height=40,
@@ -260,7 +264,7 @@ select_data_button = ctk.CTkButton(
 select_data_button.pack()
 
 index_path_label = ctk.CTkLabel(
-    screen2, text="Path to content file (.html or .txt)", font=("Arial", 14)
+    screen2, text="Đường dẫn tới file nội dung (.html hoặc .txt)", font=("Arial", 14)
 )
 index_path_label.pack()
 
@@ -269,7 +273,7 @@ index_path_entry.pack(pady=10)
 
 select_index_button = ctk.CTkButton(
     screen2,
-    text="Choose file",
+    text="Chọn file",
     command=lambda: index_path_entry.insert(0, filedialog.askopenfilename()),
     width=100,
     height=40,
@@ -280,7 +284,7 @@ select_index_button.pack()
 
 next_button = ctk.CTkButton(
     master=screen2,
-    text="Next",
+    text="Tiếp theo",
     width=100,
     height=40,
     command=submitfile,
@@ -294,7 +298,7 @@ screen3 = ctk.CTkFrame(master=app)
 
 back_tosc2 = ctk.CTkButton(
     master=screen3,
-    text="Back",
+    text="Trở lại",
     width=70,
     height=30,
     command=back_to_screen2,
@@ -303,7 +307,7 @@ back_tosc2 = ctk.CTkButton(
 )
 back_tosc2.pack(side=tk.TOP, padx=20, pady=20)
 
-input_subject_label = ctk.CTkLabel(screen3, text="Input subject:", font=("Arial", 14))
+input_subject_label = ctk.CTkLabel(screen3, text="Nhập tiêu đề:", font=("Arial", 14))
 input_subject_label.pack()
 
 input_subject_entry = ctk.CTkEntry(screen3, width=300, height=30, font=("Arial", 12))
@@ -311,7 +315,7 @@ input_subject_entry.pack(pady=10)
 
 send_button = ctk.CTkButton(
     screen3,
-    text="Send",
+    text="Gửi",
     width=100,
     height=40,
     command=send_email,
@@ -322,7 +326,7 @@ send_button.pack(pady=20)
 
 done_button = ctk.CTkButton(
     master=screen3,
-    text="Done",
+    text="Hoàn thành",
     width=100,
     height=40,
     command=app.quit,
@@ -333,7 +337,7 @@ done_button.pack(pady=20)
 
 to_success = ctk.CTkLabel(
     master=screen3,
-    text="Successfully sent emails are recorded in done.txt",
+    text="Các email đã gửi thành công được ghi lại trong done.txt",
     font=("Arial", 15),
     text_color="#2a9d8f",
 )

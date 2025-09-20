@@ -1,6 +1,6 @@
-Xin chào $NAME
-Chúc mừng bạn đã vượt qua bài kiểm tra đầu vào của chúng tôi.
-Hẹn gặp bạn trong buổi phỏng vấn sắp tới.
+Chào $NAME,
 
-Trân trọng,
-Ban tuyển dụng
+Email này được gửi tới $EMAIL của bạn.
+Vui lòng truy cập: $NOTIFICATION_URL
+
+Trân trọng!

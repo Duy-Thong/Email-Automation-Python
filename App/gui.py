@@ -88,8 +88,11 @@ def user_manual():
     )
 
 
-def send_email_task(recipient, content_type, subject, email_content):
-    full_name, receiver_email = recipient
+def send_email_task(recipient_data, content_type, subject, email_content):
+    receiver_email = recipient_data["Email"]
+    recipient_name = recipient_data.get(
+        "$NAME", receiver_email
+    )  # Use $NAME or email as fallback
     try:
         # Connect to Gmail's SMTP server
         smtp_server = "smtp.gmail.com"
@@ -103,8 +106,13 @@ def send_email_task(recipient, content_type, subject, email_content):
         message["From"] = sender_email
         message["To"] = receiver_email
         message["Subject"] = subject
-        email_content_with_name = email_content.replace("$NAME", full_name)
-        message.attach(MIMEText(email_content_with_name, content_type))
+
+        # Replace all placeholders in email content
+        personalized_content = email_content
+        for placeholder, value in recipient_data.items():
+            personalized_content = personalized_content.replace(placeholder, value)
+
+        message.attach(MIMEText(personalized_content, content_type))
 
         # Send the email
         server.sendmail(sender_email, receiver_email, message.as_string())
@@ -112,11 +120,11 @@ def send_email_task(recipient, content_type, subject, email_content):
         # Close the SMTP connection
         server.quit()
 
-        print(f"Email sent to {full_name} ({receiver_email})")
-        return (full_name, receiver_email, True)
+        print(f"Email sent to {recipient_name} ({receiver_email})")
+        return (recipient_name, receiver_email, True)
     except Exception as e:
-        print(f"Failed to send email to {full_name} ({receiver_email}): {e}")
-        return (full_name, receiver_email, False)
+        print(f"Failed to send email to {recipient_name} ({receiver_email}): {e}")
+        return (recipient_name, receiver_email, False)
 
 
 def send():
@@ -133,12 +141,30 @@ def send():
     # Read data from the Excel file
     wb = openpyxl.load_workbook(data_path)
     sheet = wb.active
-    # Get the list of recipients from columns A (Full name) and B (Email)
+
+    # Read header row to get placeholders
+    header_row = next(sheet.iter_rows(min_row=1, max_row=1, values_only=True))
+    placeholders = [str(h).strip() if h else "" for h in header_row]
+
+    # Find email column index by looking for "Email" placeholder
+    email_col_index = None
+    for i, placeholder in enumerate(placeholders):
+        if placeholder.lower() == "email":
+            email_col_index = i
+            break
+
+    if email_col_index is None:
+        raise ValueError("Không tìm thấy cột 'Email' trong file Excel")
+
+    # Get the list of recipients with all column data
     recipients = []
     for row in sheet.iter_rows(min_row=2, values_only=True):
-        full_name, email, *_ = row  # Only consider columns A and B
-        if email:
-            recipients.append((full_name, email))
+        if row[email_col_index]:  # Check if email exists
+            row_data = {}
+            for i, value in enumerate(row):
+                if i < len(placeholders) and placeholders[i]:
+                    row_data[placeholders[i]] = str(value) if value else ""
+            recipients.append(row_data)
 
     # Use ThreadPoolExecutor to send emails concurrently
     sent_successfully = []  # List of successfully sent emails
@@ -147,16 +173,16 @@ def send():
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         futures = [
             executor.submit(
-                send_email_task, recipient, content_type, subject, email_content
+                send_email_task, recipient_data, content_type, subject, email_content
             )
-            for recipient in recipients
+            for recipient_data in recipients
         ]
         for future in concurrent.futures.as_completed(futures):
-            full_name, receiver_email, success = future.result()
+            recipient_name, receiver_email, success = future.result()
             if success:
-                sent_successfully.append((full_name, receiver_email))
+                sent_successfully.append((recipient_name, receiver_email))
             else:
-                failed_recipients.append((full_name, receiver_email))
+                failed_recipients.append((recipient_name, receiver_email))
 
     with open(success_path, "w", encoding="utf-8") as f:
         for name, email in sent_successfully:

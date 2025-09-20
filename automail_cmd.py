@@ -25,12 +25,30 @@ def send_email(data_path, template_path, sender_email, sender_password, subject)
     # Read data from the Excel file
     wb = openpyxl.load_workbook(data_path)
     sheet = wb.active
-    # Get the list of recipients from columns A (Full name) and B (Email)
+
+    # Read header row to get placeholders
+    header_row = next(sheet.iter_rows(min_row=1, max_row=1, values_only=True))
+    placeholders = [str(h).strip() if h else "" for h in header_row]
+
+    # Find email column index by looking for "Email" placeholder
+    email_col_index = None
+    for i, placeholder in enumerate(placeholders):
+        if placeholder.lower() == "email":
+            email_col_index = i
+            break
+
+    if email_col_index is None:
+        raise ValueError("Không tìm thấy cột 'Email' trong file Excel")
+
+    # Get the list of recipients with all column data
     recipients = []
     for row in sheet.iter_rows(min_row=2, values_only=True):
-        full_name, email, *_ = row  # Only consider columns A and B
-        if email:
-            recipients.append((full_name, email))
+        if row[email_col_index]:  # Check if email exists
+            row_data = {}
+            for i, value in enumerate(row):
+                if i < len(placeholders) and placeholders[i]:
+                    row_data[placeholders[i]] = str(value) if value else ""
+            recipients.append(row_data)
 
     # Connect to Gmail's SMTP server
     smtp_server = "smtp.gmail.com"
@@ -44,26 +62,38 @@ def send_email(data_path, template_path, sender_email, sender_password, subject)
         sent_successfully = []  # List of successfully sent emails
         failed_recipients = []  # List of failed emails
 
-        for full_name, receiver_email in recipients:
+        for recipient_data in recipients:
+            receiver_email = recipient_data["Email"]
             try:
                 # Create a MIMEMultipart object to create the email
                 message = MIMEMultipart()
                 message["From"] = sender_email
                 message["To"] = receiver_email
                 message["Subject"] = subject
-                email_content_with_name = email_content.replace("$NAME", full_name)
+
+                # Replace all placeholders in email content
+                personalized_content = email_content
+                for placeholder, value in recipient_data.items():
+                    personalized_content = personalized_content.replace(
+                        placeholder, value
+                    )
+
                 # Attach the email content based on the determined content type
-                message.attach(MIMEText(email_content_with_name, content_type))
+                message.attach(MIMEText(personalized_content, content_type))
 
                 # Send the email
                 server.sendmail(sender_email, receiver_email, message.as_string())
 
                 # Record the successfully sent email
-                sent_successfully.append((full_name, receiver_email))
-                print(f"{full_name}, {receiver_email}")
+                recipient_name = recipient_data.get(
+                    "$NAME", receiver_email
+                )  # Use $NAME or email as fallback
+                sent_successfully.append((recipient_name, receiver_email))
+                print(f"{recipient_name}, {receiver_email}")
             except Exception as e:
                 # Record the failed email
-                failed_recipients.append((full_name, receiver_email))
+                recipient_name = recipient_data.get("$NAME", receiver_email)
+                failed_recipients.append((recipient_name, receiver_email))
             time.sleep(1)
 
         # Close the SMTP connection

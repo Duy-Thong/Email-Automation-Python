@@ -40,15 +40,22 @@ def send_email(data_path, template_path, sender_email, sender_password, subject)
     if email_col_index is None:
         raise ValueError("Không tìm thấy cột 'Email' trong file Excel")
 
-    # Get the list of recipients with all column data
-    recipients = []
-    for row in sheet.iter_rows(min_row=2, values_only=True):
-        if row[email_col_index]:  # Check if email exists
+    # Get the list of recipients with all column data and row indices
+    recipients = []  # list of tuples: (row_index, row_data_dict)
+    for row_idx, row in enumerate(
+        sheet.iter_rows(min_row=2, values_only=False), start=2
+    ):
+        email_value = (
+            row[email_col_index].value if row[email_col_index] is not None else None
+        )
+        if email_value:  # Check if email exists
             row_data = {}
-            for i, value in enumerate(row):
+            for i, cell in enumerate(row):
                 if i < len(placeholders) and placeholders[i]:
-                    row_data[placeholders[i]] = str(value) if value else ""
-            recipients.append(row_data)
+                    row_data[placeholders[i]] = (
+                        str(cell.value) if cell.value is not None else ""
+                    )
+            recipients.append((row_idx, row_data))
 
     # Connect to Gmail's SMTP server
     smtp_server = "smtp.gmail.com"
@@ -62,7 +69,7 @@ def send_email(data_path, template_path, sender_email, sender_password, subject)
         sent_successfully = []  # List of successfully sent emails
         failed_recipients = []  # List of failed emails
 
-        for recipient_data in recipients:
+        for row_idx, recipient_data in recipients:
             receiver_email = recipient_data["Email"]
             try:
                 # Create a MIMEMultipart object to create the email
@@ -89,14 +96,19 @@ def send_email(data_path, template_path, sender_email, sender_password, subject)
                     "$NAME", receiver_email
                 )  # Use $NAME or email as fallback
                 sent_successfully.append((recipient_name, receiver_email))
+                # Mark True in column E (5th column)
+                sheet.cell(row=row_idx, column=5).value = True
                 print(f"{recipient_name}, {receiver_email}")
             except Exception as e:
                 # Record the failed email
                 recipient_name = recipient_data.get("$NAME", receiver_email)
                 failed_recipients.append((recipient_name, receiver_email))
+                # Mark False in column E (5th column)
+                sheet.cell(row=row_idx, column=5).value = False
             time.sleep(1)
 
-        # Close the SMTP connection
+        # Save results and close the SMTP connection
+        wb.save(data_path)
         server.quit()
     except Exception as e:
         print(f"Failed to send emails due to: {e}")

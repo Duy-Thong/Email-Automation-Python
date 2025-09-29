@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Thông báo kết quả vòng CV - CLB Sổ Media</title>
+    <style>
+      /* Mobile responsive styles */
+      @media only screen and (max-width: 600px) {
+        /* Main container adjustments */
+        .email-container {
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          border-radius: 10px !important;
+        }
+
+        /* Content padding adjustments */
+        .content-padding {
+          padding: 20px 15px !important;
+        }
+
+        /* Text size adjustments */
+        .greeting-text {
+          font-size: 20px !important;
+          padding-bottom: 20px !important;
+        }
+
+        .announcement-text {
+          font-size: 18px !important;
+          line-height: 1.3 !important;
+        }
+
+        .section-title {
+          font-size: 18px !important;
+          padding-bottom: 15px !important;
+        }
+
+        /* Main text blocks */
+        .text-block {
+          font-size: 14px !important;
+          line-height: 1.6 !important;
+          padding: 15px !important;
+          text-align: left !important;
+        }
+
+        /* Contact info adjustments */
+        .contact-info {
+          font-size: 13px !important;
+          padding: 12px !important;
+        }
+
+        /* Closing message */
+        .closing-message {
+          font-size: 16px !important;
+          padding: 20px 15px !important;
+        }
+
+        /* Footer */
+        .footer-section {
+          font-size: 14px !important;
+          padding: 20px 15px !important;
+        }
+
+        /* Container margins */
+        .outer-container {
+          padding: 10px !important;
+        }
+      }
+
+      /* Extra small screens */
+      @media only screen and (max-width: 480px) {
+        .announcement-text {
+          font-size: 16px !important;
+        }
+
+        .text-block {
+          font-size: 13px !important;
+        }
+
+        .contact-info {
+          font-size: 12px !important;
+          padding: 10px !important;
+        }
+      }
+    </style>
+    <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:AllowPNG />
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+    <![endif]-->
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a2e;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <!-- Main Container -->
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background-color: #1a1a2e"
+    >
+      <tr>
+        <td align="center" style="padding: 20px" class="outer-container">
+          <!-- Email Container -->
+          <table
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            class="email-container"
+            style="
+              background-color: #ffffff;
+              border-radius: 20px;
+              box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+              max-width: 600px;
+            "
+          >
+            <!-- Header Section with Gradient -->
+            <tr>
+              <td
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    #ff6b6b 0%,
+                    #ee5a24 50%,
+                    #ff4757 100%
+                  );
+                  background-color: #ff6b6b;
+                  text-align: center;
+                  border-radius: 20px 20px 0 0;
+                  padding: 30px;
+                "
+              >
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        color: #ffffff;
+                        font-size: 24px;
+                        font-weight: bold;
+                        text-align: center;
+                        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+                      "
+                    >
+                      📋 THÔNG BÁO KẾT QUẢ
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Content Section -->
+            <tr>
+              <td
+                style="padding: 40px 30px; background-color: #ffffff"
+                class="content-padding"
+              >
+                <!-- Greeting -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      class="greeting-text"
+                      style="
+                        font-size: 24px;
+                        color: #333333;
+                        font-weight: bold;
+                        padding-bottom: 25px;
+                        text-align: center;
+                      "
+                    >
+                      Xin chào $NAME
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Result Notification -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="
+                    background-color: rgba(255, 107, 107, 0.1);
+                    border-radius: 15px;
+                    border: 2px solid rgba(255, 107, 107, 0.2);
+                    margin: 25px 0;
+                  "
+                >
+                  <tr>
+                    <td
+                      style="
+                        text-align: center;
+                        font-size: 18px;
+                        color: #333333;
+                        font-weight: bold;
+                        padding: 25px;
+                      "
+                    >
+                      Chúng mình rất tiếc khi phải thông báo:<br />
+                      <span
+                        style="
+                          color: #c53030;
+                          font-size: 20px;
+                          display: block;
+                          margin-top: 10px;
+                        "
+                      >
+                        Bạn đã không đủ điều kiện vượt qua<br />
+                        <strong>Vòng PV - CHESHIRE</strong>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Main Content -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="
+                    background-color: rgba(248, 249, 250, 0.5);
+                    border-radius: 10px;
+                    border: 1px solid rgba(233, 236, 239, 0.5);
+                    margin-bottom: 25px;
+                  "
+                >
+                  <tr>
+                    <td
+                      class="text-block"
+                      style="
+                        font-size: 16px;
+                        color: #333333;
+                        line-height: 1.8;
+                        text-align: justify;
+                        padding: 20px;
+                      "
+                    >
+                      Qua quá trình xem xét và đánh giá kỹ lưỡng về phần thể
+                      hiện trong vòng phỏng vấn của bạn, chúng mình nhận thấy
+                      bạn chưa phù hợp với CLB Sổ Media.
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Encouragement Message -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="
+                    background-color: rgba(248, 249, 250, 0.5);
+                    border-radius: 10px;
+                    border: 1px solid rgba(233, 236, 239, 0.5);
+                    margin-bottom: 30px;
+                  "
+                >
+                  <tr>
+                    <td
+                      class="text-block"
+                      style="
+                        font-size: 16px;
+                        color: #333333;
+                        line-height: 1.8;
+                        text-align: justify;
+                        padding: 20px;
+                      "
+                    >
+                      Hi vọng rằng dù kết quả có ra sao, bạn vẫn theo đuổi với
+                      đam mê của bản thân cũng như tỏa sáng ở những cơ hội khác.
+                      CLB Sổ Media xin cảm ơn sự tham gia của bạn trong sự kiện
+                      tuyển thành viên lần này. Sổ Media tin rằng với cùng niềm
+                      đam mê, chúng minh sẽ gặp nhau trong tương lai.
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Closing Message -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="
+                    background-color: rgba(74, 144, 226, 0.1);
+                    border-radius: 15px;
+                    border: 2px solid rgba(74, 144, 226, 0.2);
+                    margin: 40px 0;
+                  "
+                >
+                  <tr>
+                    <td
+                      class="closing-message"
+                      style="
+                        text-align: center;
+                        font-size: 18px;
+                        color: #333333;
+                        font-weight: bold;
+                        padding: 25px;
+                      "
+                    >
+                      <span style="color: #4a90e2; font-size: 20px">
+                        ✨ Sổ Media cảm ơn bạn! ✨
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Contact Information -->
+                <table
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      #f8f9fa 0%,
+                      #e9ecef 100%
+                    );
+                    background-color: #f8f9fa;
+                    border: 2px solid #4a90e2;
+                    border-radius: 20px;
+                    margin-top: 30px;
+                    box-shadow: 0 10px 30px rgba(74, 144, 226, 0.2);
+                  "
+                >
+                  <tr>
+                    <td style="padding: 25px">
+                      <table
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            class="section-title"
+                            style="
+                              font-size: 18px;
+                              font-weight: bold;
+                              color: #333333;
+                              padding-bottom: 20px;
+                              text-align: center;
+                              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+                            "
+                          >
+                            📞 Thông tin liên hệ
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="
+                          background-color: rgba(255, 255, 255, 0.7);
+                          border-radius: 10px;
+                          border: 1px solid rgba(74, 144, 226, 0.2);
+                          margin-bottom: 15px;
+                        "
+                      >
+                        <tr>
+                          <td
+                            class="contact-info"
+                            style="
+                              font-size: 15px;
+                              color: #333333;
+                              font-weight: 500;
+                              text-align: center;
+                              padding: 15px;
+                            "
+                          >
+                            📩 clbsomediaptit@gmail.com
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="
+                          background-color: rgba(255, 255, 255, 0.7);
+                          border-radius: 10px;
+                          border: 1px solid rgba(74, 144, 226, 0.2);
+                          margin-bottom: 15px;
+                        "
+                      >
+                        <tr>
+                          <td
+                            class="contact-info"
+                            style="
+                              font-size: 15px;
+                              color: #333333;
+                              font-weight: 500;
+                              text-align: center;
+                              padding: 15px;
+                            "
+                          >
+                            📍 Km10, Nguyễn Trãi, Hà Đông, Hà Nội
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="
+                          background-color: rgba(255, 255, 255, 0.7);
+                          border-radius: 10px;
+                          border: 1px solid rgba(74, 144, 226, 0.2);
+                          margin-top: 20px;
+                        "
+                      >
+                        <tr>
+                          <td style="text-align: center; padding: 15px">
+                            <table
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                              border="0"
+                            >
+                              <tr>
+                                <td
+                                  style="
+                                    font-weight: bold;
+                                    color: #4a90e2;
+                                    font-size: 16px;
+                                    text-align: center;
+                                    padding-bottom: 10px;
+                                  "
+                                >
+                                  📞 Liên hệ trực tiếp:
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  class="contact-info"
+                                  style="
+                                    font-size: 14px;
+                                    color: #333333;
+                                    line-height: 1.5;
+                                    text-align: center;
+                                  "
+                                >
+                                  Uyên Nhi: 0979.236.877 | Văn Trung:
+                                  0383.841.814
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <table
+                        width="100%"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="margin-top: 20px"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              font-size: 14px;
+                              color: #666666;
+                              text-align: center;
+                              font-style: italic;
+                              padding-top: 15px;
+                            "
+                          >
+                            Nếu bạn có bất kì thắc mắc nào, vui lòng liên hệ
+                            theo thông tin trên.
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Footer with Gradient -->
+            <tr>
+              <td
+                class="footer-section"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    #ff6b6b 0%,
+                    #ee5a24 50%,
+                    #ff4757 100%
+                  );
+                  color: #ffffff;
+                  text-align: center;
+                  padding: 25px;
+                  border-radius: 0 0 20px 20px;
+                  font-weight: bold;
+                  font-size: 16px;
+                  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+                "
+              >
+                CLB Sổ Media - Gen 9 Recruitment
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
